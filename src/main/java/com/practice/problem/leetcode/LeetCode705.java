@@ -40,13 +40,39 @@ package com.practice.problem.leetcode;
 public class LeetCode705 {
 
   public static void main(String[] args) {
-
+    approach1();
   }
 
-  private static void approach1(){
-    int i[] = {};
+  private static void approach1() {
     MyHashSet1 set = new MyHashSet1();
-    
+    NodeInput input = getInput();
+    while (input != null) {
+      if (input.action.equals("add")) {
+        set.add(input.value);
+      } else if (input.action.equals("contains")) {
+        set.contains(input.value);
+      } else if (input.action.equals("remove")) {
+        set.remove(input.value);
+      }
+      input = input.next;
+    }
+  }
+
+  private static NodeInput getInput() {
+    NodeInput input = new NodeInput("add", 1);
+    NodeInput head = input;
+    input.next = new NodeInput("add", 2);
+    input = input.next;
+    input.next = new NodeInput("contains", 1);
+    input = input.next;
+    input.next = new NodeInput("contains", 3);
+    input = input.next;
+    input.next = new NodeInput("add", 2);
+    input = input.next;
+    input.next = new NodeInput("remove", 2);
+    input = input.next;
+    input.next = new NodeInput("contains", 2);
+    return head;
   }
 }
 
@@ -63,13 +89,30 @@ class MyHashSet1 {
 
   public void add(int key) {
     set[key] = true;
+    System.out.println(key + " added");
   }
 
   public void remove(int key) {
     set[key] = false;
+    System.out.println(key + " removed");
   }
 
   public boolean contains(int key) {
+    System.out.println(key + " exists: " + set[key]);
     return set[key];
   }
+}
+
+class NodeInput {
+
+  public String action;
+  public int value;
+  public NodeInput next;
+
+  NodeInput(String action, int value) {
+    this.action = action;
+    this.value = value;
+  }
+
+
 }
